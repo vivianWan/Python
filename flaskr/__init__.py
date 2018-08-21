@@ -28,4 +28,7 @@ def create_app(test_config = None):
     
     hello
 
+    from . import db
+    db.init_app(app)
+
     return app
