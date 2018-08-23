@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS posts;
 CREATE TABLE users (
     id INTEGER PRIMARY KEY NOT NULL,
     username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    passwords TEXT NOT NULL
 );
 
 CREATE TABLE posts (
