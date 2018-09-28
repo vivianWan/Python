@@ -1,6 +1,7 @@
 import functools
 
-from flask import (Blueprint, flash, g, redirect, render_template,request, session, url_for)
+from flask import (Blueprint, flash, g, redirect)
+from flask import (render_template,request, session, url_for)
 
 from werkzeug.security import check_password_hash,generate_password_hash
 
@@ -22,13 +23,13 @@ def register():
         elif not password:
             error = 'Password is required'
         elif db.execute(
-            'SELECT id FROM users WHERE username = ?', (username,)
+            'SELECT id FROM user1 WHERE username = ?', (username,)
         ).fetchone() is not None:
             error =  'User {} is already registered.'.format(username)
 
         if error is None:
             db.execute(
-                'INSERT INTO users (username, password) VALUE (?,?)',
+                'INSERT INTO user1 (username, password) VALUE (?,?)',
                 (username,generate_password_hash(password))
             )
             db.commit()
@@ -46,17 +47,17 @@ def login():
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * FROM users  WHERE username = ?', (username,)
+            'SELECT * FROM user1  WHERE username = ?', (username,)
         ).fetchone()
 
         if user is None:
             error = 'Incorrect username.'
-        elif not check_password_hash(user['password'], password):
+        elif not check_password_hash(user1['password'], password):
             error = 'Incorrect password.'
 
         if error is None:
             session.clear()
-            session['user_id'] = user['id']
+            session['user_id'] = user1['id']
             return redirect(url_for('index'))
         
         flash(error)
@@ -71,7 +72,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM users WHERE id = ?', (user_id,)
+            'SELECT * FROM user1 WHERE id = ?', (user_id,)
         ).fetchone()
 
 @bp.route('/logout')
