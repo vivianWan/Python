@@ -1,17 +1,17 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS user1;
+DROP TABLE IF EXISTS post;
 
-CREATE TABLE users (
+CREATE TABLE user1 (
     id INTEGER PRIMARY KEY NOT NULL,
     username TEXT UNIQUE NOT NULL,
     passwords TEXT NOT NULL
 );
 
-CREATE TABLE posts (
+CREATE TABLE post (
     id INTEGER PRIMARY KEY NOT NULL,
     author_id INTEGER NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_,
     title TEXT NOT NULL,
     body TEXT NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES users (id)
+    FOREIGN KEY (author_id) REFERENCES user1 (id)
 );
